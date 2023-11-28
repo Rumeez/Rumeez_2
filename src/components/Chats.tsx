@@ -1,11 +1,9 @@
 import React from "react";
 
-class Chats extends React.Component {
-  render() {
-    return <React.Fragment>
-      <p>Chats</p>
-    </React.Fragment>
-  }
+const Chats: React.FunctionComponent = (): JSX.Element => {
+  return <div>
+    <p>Chats</p>
+  </div>
 }
 
 export default Chats;

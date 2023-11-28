@@ -1,11 +1,9 @@
 import React from "react";
 
-class Home extends React.Component {
-  render() {
-    return <React.Fragment>
-      <p>Home</p>
-    </React.Fragment>
-  }
+const Home: React.FunctionComponent = (): JSX.Element => {
+  return <div>
+    <p>Home</p>
+  </div>
 }
 
 export default Home;
