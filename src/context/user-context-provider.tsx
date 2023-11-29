@@ -11,7 +11,7 @@ interface Props {
 export const UserContextProvider: React.FunctionComponent<Props> = (
   props: Props
 ): JSX.Element => {
-  console.log("Component updated");
+  // console.log("Component updated");
   // alert("Ding dong, yo")
   /**
    * Using react hooks, set the default state

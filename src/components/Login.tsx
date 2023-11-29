@@ -11,6 +11,7 @@ import {
   Button
 } from "reactstrap";
 import { UserContext } from "../context/user-context";
+import getCookie from "../util/getCookie";
 
 const Login: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
@@ -21,24 +22,39 @@ const Login: React.FunctionComponent = (): JSX.Element => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8000/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      console.log("Before cookie: " + getCookie('token'));
+
+      const resource: string = "http://localhost:8000/user/login";
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+        accept: "*/*",
+        Origin: "http://localhost:3000",
+        host: "localhost:8000",
+        connection: "keep-alive"
+      };
+      const req: RequestInit = {
+        headers: headers,
+        method: "POST",
+        credentials: "include",
+        mode: "cors",
         body: JSON.stringify({
           email: email,
           password: password,
         }),
-      });
+      };
+
+      const response = await fetch(resource, req);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        alert(`HTTP error! Status: ${response.status}`);
+        return;
       }
 
       const data = await response.json();
       // Handle the response data as needed
       console.log('Login successful:', data);
+
+      console.log("After cookie: " + getCookie('token'));
 
       // Update the context with the user information
       context.updateState({
