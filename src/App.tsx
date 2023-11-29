@@ -6,12 +6,14 @@ import Home from './components/Home';
 import User from './components/User';
 import Chats from './components/Chats';
 import OptionsBar from './components/OptionsBar';
+import LoginChecker from './components/LoginChecker';
 
 class App extends React.Component<{}, {}> {
   render() {
     return (
       <UserContextProvider>
         <Router>
+          <LoginChecker />
           <OptionsBar />
           <Routes>
             <Route path="home" element={<Home />} />

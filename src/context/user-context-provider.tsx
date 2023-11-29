@@ -16,7 +16,9 @@ export const UserContextProvider: React.FunctionComponent<Props> = (
   /**
    * Using react hooks, set the default state
    */
-  const [state, setState] = useState({user: {isLoggedIn: false}});
+  let initialState = {user: {isLoggedIn: false}};
+  initialState.user = {...initialState.user, ...props};
+  const [state, setState] = useState(initialState);
 
   /**
    * Declare the update state method that will handle the state values

@@ -62,6 +62,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           firstName: data.firstname, // Adjust according to the actual response structure
           lastName: data.lastname,   // Adjust according to the actual response structure
           email: email,
+          verified: data.verified
         },
       });
 
