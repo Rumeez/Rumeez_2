@@ -21,7 +21,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
   const handleSumbit = (e: any) => {
     e.preventDefault();
     alert("Email: " + email + "\nPassword: " + password);
-    context.updateState({user: {isloggedin: true, firstname: "John", lastname: "Wick", email: email}});
+    context.updateState({user: {isLoggedIn: true, firstName: "John", lastName: "Wick", email: email}});
   }
 
   return <div className='d-flex justify-content-center'>
@@ -54,7 +54,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
         </Form>
       </CardBody>
     </Card>
-    <p>Logged in guy: {context.user.firstname ? context.user.firstname : ""}</p>
+    <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p>
   </div>
 }
 

@@ -7,7 +7,7 @@ const User: React.FunctionComponent = (): JSX.Element => {
   const [count, setCount] = useState(0);
 
   return <div>
-    {context.user.isloggedin? <p>Logged in</p> : <p>Not logged in</p>}
+    {context.user.isLoggedIn? <p>Logged in</p> : <p>Not logged in</p>}
     <p>Count = {count}</p>
     <Button onClick={() => setCount(count+1)}>+</Button>
   </div>

@@ -12,9 +12,10 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from 'reactstrap';
 import { UserContext } from "../context/user-context";
+import { Link, useNavigate } from 'react-router-dom';
+// import Nav from 'react-bootstrap/Nav';
 
 const OptionsBar: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
@@ -23,48 +24,50 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
 
   const toggle = () => setIsOpen(!isOpen);
 
+  const navigate = useNavigate();
+
   return (
     <div>
-      <Navbar color="light" light={true} full={false} expand="md" container="fluid">
-        <NavbarBrand href="/">Rumeez</NavbarBrand>
+      <Navbar color="light" light={true} /*full="true"*/ expand="md" container="fluid">
+        <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              <NavLink href="/home">Home</NavLink>
+              <NavLink onClick={()=>navigate("/home")}>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/user">Preferences</NavLink>
+              <NavLink onClick={()=>navigate("/user")} >Preferences</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/chat">Chats</NavLink>
+              <NavLink onClick={()=>navigate("/chats")} >Chats</NavLink>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 User
               </DropdownToggle>
-              <DropdownMenu left>
+              <DropdownMenu left="true">
                 <DropdownItem>Update preferences</DropdownItem>
                 <DropdownItem>Password reset</DropdownItem>
                 <DropdownItem>Account verification</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          {!context.user.isloggedin ?
+          {!context.user.isLoggedIn ?
             <div>
               <Nav>
                 <NavItem>
-                  <NavLink href="/signup">Sign up</NavLink>
+                  <NavLink onClick={()=>navigate("/signup")}>Sign up</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="/login">Login</NavLink>
+                  <NavLink onClick={()=>navigate("/login")}>Login</NavLink>
                 </NavItem>
               </Nav>
             </div>
             :
             <Nav>
               <NavItem>
-                <NavLink href="/logout">Logout</NavLink>
+                <NavLink onClick={()=>navigate("/logout")}>Logout</NavLink>
               </NavItem>
             </Nav>
           }

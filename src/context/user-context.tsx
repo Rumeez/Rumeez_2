@@ -2,10 +2,10 @@ import React from "react";
 
 export interface User {
   email?: string,
-  firstname?: string,
-  lastname?: string,
+  firstName?: string,
+  lastName?: string,
   verified?: boolean,
-  isloggedin: boolean
+  isLoggedIn: boolean
 }
 
 /**
@@ -21,7 +21,7 @@ export interface AppState {
  */
 const defaultState: AppState = {
   user: {
-    isloggedin: false
+    isLoggedIn: false
   },
   updateState: (newState?: Partial<AppState>) => {},
 };
