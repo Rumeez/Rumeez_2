@@ -12,15 +12,18 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
+  Modal,
 } from 'reactstrap';
 import { UserContext } from "../context/user-context";
 import { Link, useNavigate } from 'react-router-dom';
+import Login from './Login';
 // import Nav from 'react-bootstrap/Nav';
 
 const OptionsBar: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(true);
+  const [modal, setModal] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -60,7 +63,7 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
                   <NavLink onClick={()=>navigate("/signup")}>Sign up</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink onClick={()=>navigate("/login")}>Login</NavLink>
+                  <NavLink onClick={()=>setModal(!modal)}>Login</NavLink>
                 </NavItem>
               </Nav>
             </div>
@@ -72,6 +75,9 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
             </Nav>
           }
         </Collapse>
+        <Modal isOpen={modal} toggle={()=>setModal(!modal)}>
+          <Login />
+        </Modal>
       </Navbar>
     </div>
   );

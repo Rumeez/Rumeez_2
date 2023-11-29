@@ -90,7 +90,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
           </Form>
         </CardBody>
       </Card>
-      <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p>
+      {/* <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p> */}
     </div>
   );
 };

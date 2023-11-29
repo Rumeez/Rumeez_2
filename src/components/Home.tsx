@@ -12,27 +12,27 @@ const Home: React.FunctionComponent = (): JSX.Element => {
     const backendUrl = 'http://localhost:8000/look';
 
     axios.get(backendUrl)
-      .then((response) => {
+      .then((response: any) => {
         const userScores = response.data;
 
         for (const userId in userScores) {
           axios.get(`/getuser/${userId}`)
-            .then((userResponse) => {
+            .then((userResponse: any) => {
               const userData = userResponse.data;
               console.log(`User ID: ${userId}, User Data:`, userData);
             })
-            .catch((userError) => {
+            .catch((userError: any) => {
               console.error(`Error fetching user ID ${userId} data:`, userError);
             });
         }
 
         setData(userScores);
       })
-      .catch((error) => {
+      .catch((error: any) => {
         console.error('Error fetching data:', error);
 
         // Redirect to localhost:3000/ if not logged in
-        if (!context.user.isloggedin) {
+        if (!context.user.isLoggedIn) {
           navigate('/');
         }
       });
