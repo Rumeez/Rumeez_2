@@ -8,7 +8,8 @@ import {
   CardTitle,
   Card,
   CardHeader,
-  Button
+  Button,
+  CardText
 } from "reactstrap";
 import { UserContext } from "../context/user-context";
 import getCookie from "../util/getCookie";
@@ -17,20 +18,15 @@ const Login: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [invalidLogin, setInvalidLogin] = useState(false);
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      console.log("Before cookie: " + getCookie('token'));
-
       const resource: string = "http://localhost:8000/user/login";
       const headers: HeadersInit = {
         "Content-Type": "application/json",
-        accept: "*/*",
-        Origin: "http://localhost:3000",
-        host: "localhost:8000",
-        connection: "keep-alive"
       };
       const req: RequestInit = {
         headers: headers,
@@ -46,8 +42,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
       const response = await fetch(resource, req);
 
       if (!response.ok) {
-        alert(`HTTP error! Status: ${response.status}`);
-        return;
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       const data = await response.json();
@@ -67,6 +62,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
       });
     } catch (error) {
       console.error('Error during login:', error);
+
       // Handle the error, e.g., display an error message to the user
     }
   };
@@ -104,6 +100,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
               Login
             </Button>
           </Form>
+        {invalidLogin ? <CardText>Invalid username or password!</CardText>: <></>}
         </CardBody>
       </Card>
       {/* <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p> */}
