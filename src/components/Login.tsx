@@ -11,17 +11,16 @@ import {
   Button
 } from "reactstrap";
 import { UserContext } from "../context/user-context";
-import { redirect } from "react-router";
 
 const Login: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSumbit = (e: any) => {
+  const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     alert("Email: " + email + "\nPassword: " + password);
-    context.updateState({user: {isLoggedIn: true, firstName: "John", lastName: "Wick", email: email}});
+    context.updateState({user: {isloggedin: true, firstname: "John", lastname: "Wick", email: email}});
   }
 
   return <div className='d-flex justify-content-center'>
@@ -54,7 +53,7 @@ const Login: React.FunctionComponent = (): JSX.Element => {
         </Form>
       </CardBody>
     </Card>
-    <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p>
+    <p>Logged in guy: {context.user.firstname ? context.user.firstname : ""}</p>
   </div>
 }
 
