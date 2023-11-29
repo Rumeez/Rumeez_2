@@ -9,16 +9,24 @@ import {
   Card,
   CardHeader,
   Button,
-  CardText
+  CardText,
+  CardFooter
 } from "reactstrap";
 import { UserContext } from "../context/user-context";
-import getCookie from "../util/getCookie";
+import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-const Login: React.FunctionComponent = (): JSX.Element => {
+interface ILoginProps {
+  setModal(val: boolean): void;
+}
+
+const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element => {
   const context = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalidLogin, setInvalidLogin] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleSumbit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,10 +54,6 @@ const Login: React.FunctionComponent = (): JSX.Element => {
       }
 
       const data = await response.json();
-      // Handle the response data as needed
-      console.log('Login successful:', data);
-
-      console.log("After cookie: " + getCookie('token'));
 
       // Update the context with the user information
       context.updateState({
@@ -60,9 +64,12 @@ const Login: React.FunctionComponent = (): JSX.Element => {
           email: email,
         },
       });
+
+      navigate('/home');
+      setModal(false);
     } catch (error) {
       console.error('Error during login:', error);
-
+      setInvalidLogin(true);
       // Handle the error, e.g., display an error message to the user
     }
   };
@@ -100,8 +107,9 @@ const Login: React.FunctionComponent = (): JSX.Element => {
               Login
             </Button>
           </Form>
-        {invalidLogin ? <CardText>Invalid username or password!</CardText>: <></>}
+        {invalidLogin ? <CardText style={{color: 'red'}}>Invalid username or password!</CardText>: <></>}
         </CardBody>
+        <CardFooter><NavLink onClick={()=>setModal(false)} to="/accountrecovery">Forgot password?</NavLink></CardFooter>
       </Card>
       {/* <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p> */}
     </div>

@@ -104,7 +104,7 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
           }
         </Collapse>
         <Modal isOpen={modal} toggle={()=>setModal(!modal)}>
-          <Login />
+          <Login setModal={setModal}/>
         </Modal>
       </Navbar>
     </div>
