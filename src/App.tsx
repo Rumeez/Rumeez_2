@@ -6,21 +6,25 @@ import Home from './components/Home';
 import User from './components/User';
 import { Routes, Navigate, Route } from 'react-router';
 import Chats from './components/Chats';
+import Login from './components/Login';
+import OptionsBar from './components/OptionsBar';
 
 class App extends React.Component<{}, {}> {
 
   render() {
     return (
-      <BrowserRouter>
-        <UserContextProvider>
+      <UserContextProvider>
+        <BrowserRouter>
+          <OptionsBar />
           <Routes>
             <Route path="/home" element={<Home/>} />
             <Route path="/user" element={<User />} />
             <Route path="/chats" element={<Chats />} />
-            <Route path="*" element={<Navigate to="/home" />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="*" element={<Navigate to="/home" />} /> */}
           </Routes>
-        </UserContextProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+      </UserContextProvider>
     );
   }
 }
