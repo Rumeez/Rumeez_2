@@ -19,7 +19,7 @@ import { Link, redirect, useNavigate } from 'react-router-dom';
 import Login from './Login';
 // import Nav from 'react-bootstrap/Nav';
 
-const OptionsBar: React.FunctionComponent = (): JSX.Element => {
+const OptionsBarA: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(true);
@@ -63,26 +63,13 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
         <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
+          
+          
           <Nav className="me-auto" navbar>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/home")}>Home</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/user")} >Preferences</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/chats")} >Chats</NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                User
-              </DropdownToggle>
-              <DropdownMenu left="true">
-                <DropdownItem>Update preferences</DropdownItem>
-                <DropdownItem>Password reset</DropdownItem>
-                <DropdownItem>Account verification</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            
+            {/***********************************************************************************/}
+            
+            {/*---------------------------------------------------------------------------------*/}
           </Nav>
           {!context.user.isLoggedIn ?
             <div>
@@ -111,4 +98,4 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
   );
 }
 
-export default OptionsBar;
+export default OptionsBarA;
