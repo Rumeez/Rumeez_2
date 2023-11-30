@@ -5,7 +5,8 @@ import { UserContextProvider } from './context/user-context-provider';
 import Home from './components/Home';
 import User from './components/User';
 import Chats from './components/Chats';
-import OptionsBar from './components/OptionsBar';
+import OptionsBarA from './components/OptionsBarA';
+import OptionsBarB from './components/OptionsBarB';
 import LoginChecker from './components/LoginChecker';
 
 class App extends React.Component<{}, {}> {
@@ -14,7 +15,7 @@ class App extends React.Component<{}, {}> {
       <UserContextProvider>
         <Router>
           <LoginChecker />
-          <OptionsBar />
+          <OptionsBarB />
           <Routes>
             <Route path="home" element={<Home />} />
             <Route path="user" element={<User />} />
