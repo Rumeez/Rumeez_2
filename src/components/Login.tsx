@@ -54,7 +54,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
       }
 
       const data = await response.json();
-
+      console.log(data);
       // Update the context with the user information
       context.updateState({
         user: {
@@ -62,6 +62,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           firstName: data.firstname, // Adjust according to the actual response structure
           lastName: data.lastname,   // Adjust according to the actual response structure
           email: email,
+          userId: data.userId,
           verified: data.verified
         },
       });
