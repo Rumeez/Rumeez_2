@@ -6,7 +6,8 @@ export interface User {
   lastName?: string,
   userId?: string,
   verified?: boolean,
-  isLoggedIn: boolean
+  isLoggedIn: boolean,
+  isJustSignedUp?: boolean,
 }
 
 /**
@@ -22,7 +23,7 @@ export interface AppState {
  */
 const defaultState: AppState = {
   user: {
-    isLoggedIn: false
+    isLoggedIn: false,
   },
   updateState: (newState?: Partial<AppState>) => {},
 };
