@@ -78,8 +78,8 @@ const Chats: React.FunctionComponent = (): JSX.Element => {
         <Button 
           key={index} 
           style={{ 
-            backgroundColor: index % 2 === 0 ? 'blue' : 'yellow', // Alternate colors
-            color: index % 2 === 0 ? 'white' : 'black', // Text color for readability
+            backgroundColor: 'lightblue', // Alternate colors
+            color: 'black', // Text color for readability
             width: '60%' // Set a specific width for uniformity
           }} 
           onClick={() => handleChatClick(id)}
