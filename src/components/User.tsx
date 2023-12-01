@@ -14,8 +14,8 @@ import {
 
 const User: React.FC = () => {
   const initialFormData = {
-    firstName: '',
-    lastName: '',
+    firstname: '',
+    lastname: '',
     bio: '',
     gender: '',
     year: '',
@@ -23,9 +23,7 @@ const User: React.FC = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [formErrors, setFormErrors] = useState(initialFormData);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Load user information from localStorage when the component mounts
   useEffect(() => {
@@ -40,20 +38,43 @@ const User: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Handle form submission logic here
+    try {
+      const response = await fetch('http://localhost:8000/user/update-user-info', {
+      credentials: 'include',
+      method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstname: formData.firstname,
+          lastname: formData.lastname,
+          bio: formData.bio,
+          gender: formData.gender,
+          year: formData.year,
+          major: formData.major,
+        }),
+      });
 
-    // Save the updated form data to local storage
-    localStorage.setItem('userFormData', JSON.stringify(formData));
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
+      // Assuming your backend responds with a success status
+      // Handle the response as needed, e.g., show a success message
+      console.log('User info updated successfully!');
 
-    // Check if the user has come from the Signup component
-    if (location.state && location.state.fromSignup) {
-      navigate('/preference'); // Navigate to Preference only if fromSignup is true
-    } else {
-      // Handle navigation or logic for other scenarios
+      // Save the updated form data to local storage
+      localStorage.setItem('userFormData', JSON.stringify(formData));
+
+      // Check if the user has come from the Signup component
+      alert('Updated User Info');
+      navigate('/home');
+    } catch (error) {
+      console.error('Error updating user info:', error);
+      // Handle errors, e.g., show an error message to the user
     }
   };
 
@@ -65,23 +86,23 @@ const User: React.FC = () => {
             <h1>User Information</h1>
             <Form onSubmit={handleSubmit}>
               <FormGroup>
-                <Label for="firstName">First Name:</Label>
+                <Label for="firstname">First Name:</Label>
                 <Input
                   type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
+                  id="firstname"
+                  name="firstname"
+                  value={formData.firstname}
                   onChange={handleInputChange}
                   required
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="lastName">Last Name:</Label>
+                <Label for="lastname">Last Name:</Label>
                 <Input
                   type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
+                  id="lastname"
+                  name="lastname"
+                  value={formData.lastname}
                   onChange={handleInputChange}
                   required
                 />

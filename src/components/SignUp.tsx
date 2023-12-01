@@ -28,7 +28,6 @@ const Signup: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Load user information from localStorage when the component mounts
   useEffect(() => {
