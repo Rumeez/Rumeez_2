@@ -1,3 +1,15 @@
+body {
+  /* Use linear-gradient for the gradient effect */
+  background: linear-gradient(to top,/* #107ff6*/ #f9f9f9 , #fdfcfc 35%);
+  /* Set background properties to cover the entire viewport */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Ensures the background remains fixed */
+  color: #fff; /* Text color */
+  font-family: Arial, sans-serif; /* Font family */
+  text-align: center;
+}
+
 .App {
   text-align: center;
 }

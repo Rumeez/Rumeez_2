@@ -54,7 +54,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
       }
 
       const data = await response.json();
-
+      console.log(data);
       // Update the context with the user information
       context.updateState({
         user: {
@@ -62,11 +62,20 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           firstName: data.firstname, // Adjust according to the actual response structure
           lastName: data.lastname,   // Adjust according to the actual response structure
           email: email,
-          verified: data.verified,
+          userId: data.userId,
+          verified: data.verified
         },
       });
+      //check if preferences is null. If so, redirect to preferences page. otherwise redirect to home
+      const userId = await data.userId;
+      const loggedInUser = await fetch(`http://localhost:8000/look/getuser/${userId}`, { credentials: 'include' });
+      const loggedInUserData = await loggedInUser.json();
+      console.log(loggedInUserData);
+      if(loggedInUserData.preferences)
+        navigate('/home');
+      else
+        navigate('/preference');
 
-      navigate('/home');
       setModal(false);
     } catch (error) {
       console.error('Error during login:', error);

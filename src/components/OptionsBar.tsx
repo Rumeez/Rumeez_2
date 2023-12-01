@@ -53,7 +53,7 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
       // Handle the error, e.g., display an error message to the user
     }
 
-    redirect('/');
+    navigate('/');
     navigate(0)
   };
 
@@ -68,7 +68,10 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
               <NavLink onClick={()=>navigate("/home")}>Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={()=>navigate("/user")} >Preferences</NavLink>
+              <NavLink onClick={()=>navigate("/user")} >User Information</NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink onClick={()=>navigate("/preference")} >Preferences</NavLink>
             </NavItem>
             <NavItem>
               <NavLink onClick={()=>navigate("/chats")} >Chats</NavLink>
@@ -78,7 +81,6 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
                 User
               </DropdownToggle>
               <DropdownMenu left="true">
-                <DropdownItem>Update preferences</DropdownItem>
                 <DropdownItem>Password reset</DropdownItem>
                 <DropdownItem>Account verification</DropdownItem>
               </DropdownMenu>

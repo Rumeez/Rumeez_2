@@ -4,8 +4,10 @@ export interface User {
   email?: string,
   firstName?: string,
   lastName?: string,
+  userId?: string,
   verified?: boolean,
   isLoggedIn: boolean,
+  isJustSignedUp?: boolean,
 }
 
 /**
