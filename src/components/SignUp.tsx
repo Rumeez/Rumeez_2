@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container,
   Row,
@@ -14,14 +14,29 @@ import {
 } from 'reactstrap';
 
 const Signup: React.FC = () => {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     email: '',
     password: '',
-    confirmPassword: '',
-  });
+    firstname: '',
+    lastname: '',
+    bio: '',
+    gender: '',
+    year: '',
+    major: '',
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Load user information from localStorage when the component mounts
+  useEffect(() => {
+    const savedData = localStorage.getItem('userFormData');
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,21 +47,41 @@ const Signup: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Add your form submission logic here
-    // You can send the formData to your backend for processing
+    // Handle form submission logic here
 
-    // Redirect to the User component with state indicating the source
-    navigate('/user', { state: { fromSignup: true } });
+    // Save the updated form data to local storage
+    localStorage.setItem('userFormData', JSON.stringify(formData));
 
-    // Clear the form after submission
-    setFormData({
-      email: '',
-      password: '',
-      confirmPassword: '',
-    });
+    try {
+      const response = await fetch('http://localhost:8000/user/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Assuming your backend responds with JSON data
+      const result = await response.json();
+      
+
+      // Handle the response as needed, e.g., show a success message
+      console.log('Signup successful!', result);
+
+      // Redirect to the home component
+      navigate('/');
+    } catch (error) {
+      console.error('Error during signup:', error);
+      // Handle errors, e.g., show an error message to the user
+    }
   };
 
   return (
@@ -88,12 +123,73 @@ const Signup: React.FC = () => {
                 </InputGroup>
               </FormGroup>
               <FormGroup>
-                <Label for="confirmPassword">Confirm Password:</Label>
+                <Label for="firstname">First Name:</Label>
                 <Input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
+                  type="text"
+                  id="firstname"
+                  name="firstname"
+                  value={formData.firstname}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="lastname">Last Name:</Label>
+                <Input
+                  type="text"
+                  id="lastname"
+                  name="lastname"
+                  value={formData.lastname}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="bio">Bio:</Label>
+                <Input
+                  type="textarea"
+                  id="bio"
+                  name="bio"
+                  value={formData.bio}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="gender">Gender:</Label>
+                <Input
+                  type="select"
+                  id="gender"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="man">Man</option>
+                  <option value="woman">Woman</option>
+                  <option value="non-binary">Non-binary</option>
+                  <option value="other">Other</option>
+                </Input>
+              </FormGroup>
+              <FormGroup>
+                <Label for="year">Year:</Label>
+                <Input
+                  type="text"
+                  id="year"
+                  name="year"
+                  value={formData.year}
+                  onChange={handleInputChange}
+                  required
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="major">Major:</Label>
+                <Input
+                  type="text"
+                  id="major"
+                  name="major"
+                  value={formData.major}
                   onChange={handleInputChange}
                   required
                 />
@@ -110,7 +206,3 @@ const Signup: React.FC = () => {
 };
 
 export default Signup;
-
-
-
-

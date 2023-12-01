@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
@@ -46,6 +47,7 @@ const User: React.FC = () => {
 
     // Save the updated form data to local storage
     localStorage.setItem('userFormData', JSON.stringify(formData));
+
 
     // Check if the user has come from the Signup component
     if (location.state && location.state.fromSignup) {

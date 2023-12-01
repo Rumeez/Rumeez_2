@@ -66,8 +66,16 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           verified: data.verified
         },
       });
+      //check if preferences is null. If so, redirect to preferences page. otherwise redirect to home
+      const userId = await data.userId;
+      const loggedInUser = await fetch(`http://localhost:8000/look/getuser/${userId}`, { credentials: 'include' });
+      const loggedInUserData = await loggedInUser.json();
+      console.log(loggedInUserData);
+      if(loggedInUserData.preferences)
+        navigate('/home');
+      else
+        navigate('/preference');
 
-      navigate('/home');
       setModal(false);
     } catch (error) {
       console.error('Error during login:', error);

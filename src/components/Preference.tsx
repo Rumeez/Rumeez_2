@@ -10,43 +10,66 @@ import {
   Button,
 } from 'reactstrap';
 
+import { Link, redirect, useNavigate } from 'react-router-dom';
+
 const Preference: React.FC = () => {
   const [formData, setFormData] = useState({
     dormType: '',
-    roommateGender: '',
+    numberOfRoommates: '',
+    genderOfRoomate: '',
     smoking: '',
     drinking: '',
-    risetime: '',
-    sleeptime: '',
-    temperature: '',
+    riseTime: '',
+    sleepTime: '',
+    temp: '',
   });
-
+  const navigate = useNavigate();
   const [originalFormData] = useState({ ...formData }); // Store the original form data
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Check if the form data has changed
-    const formDataChanged = JSON.stringify(formData) !== JSON.stringify(originalFormData);
-
-    if (formDataChanged) {
-      // The form data has changed, add your logic to handle the preferences submission here
-      // You can send the formData to your backend or perform any other actions
-
-      // Optionally, you can update the originalFormData to the new formData
-      // originalFormData will now contain the latest form data for future comparisons
-      // originalFormData = { ...formData };
-    } else {
-      // The form data has not changed, you can display a message or handle it as needed
-      alert('No changes made. Nothing to save.');
+  
+    try {
+      const response = await fetch('http://localhost:8000/user/update-preferences', {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          dormType: formData.dormType,
+          numberOfRoommates: Number(formData.numberOfRoommates),
+          genderOfRoomate: formData.genderOfRoomate,
+          smoking: formData.smoking === 'Yes', // Convert to boolean
+          drinking: formData.drinking === 'Yes', // Convert to boolean
+          riseTime: formData.riseTime,
+          sleepTime: formData.sleepTime,
+          temp: formData.temp,
+        }),
+      });
+  
+      // Check if the response status is OK (200-299)
+      if (response.ok) {
+        // Handle the case where the update was successful
+        console.log('Preferences updated successfully!');
+        alert('Updated Preferenes Saved!')
+        navigate('/home');
+      } else {
+        // Handle the case where the server returns an error status
+        console.error(`Preferences update failed. Status: ${response.status}`);
+        // You can handle different HTTP error statuses here if needed
+      }
+    } catch (error) {
+      console.error('Error updating preferences:', error);
+      // Handle other errors, e.g., network issues
     }
   };
-
+  
   return (
     <Container>
       <Row className="justify-content-center">
@@ -67,24 +90,44 @@ const Preference: React.FC = () => {
                   <option value="" disabled>
                     Select dorm type
                   </option>
-                  <option value="plazadouble">Plaza Double</option>
-                  <option value="plazatriple">Plaza Triple</option>
-                  <option value="plazadoubleprivbath">Plaza Double Priv Bath</option>
-                  <option value="plazatripleprivbath">Plaza Triple Priv Bath</option>
-                  <option value="deluxedouble">Deluxe Triple</option>
-                  <option value="deluxetriple">Deluxe Triple</option>
-                  <option value="classicdouble">Classic Double</option>
-                  <option value="classictriple">Classic Triple</option>
-                  <option value="universityapartments">University Apartments</option>
+                  <option value="plaza double">Plaza Double</option>
+                  <option value="plaza triple">Plaza Triple</option>
+                  <option value="plaza double priv bath">Plaza Double Priv Bath</option>
+                  <option value="plaza triple priv bath">Plaza Triple Priv Bath</option>
+                  <option value="deluxe double">Deluxe Triple</option>
+                  <option value="deluxe triple">Deluxe Triple</option>
+                  <option value="classic double">Classic Double</option>
+                  <option value="classic triple">Classic Triple</option>
+                  <option value="university apartments">University Apartments</option>
                 </Input>
               </FormGroup>
+
               <FormGroup>
-                <Label for="roommateGender">Roommate Gender:</Label>
+                <Label for="numberOfRoommates">Number of Roommates:</Label>
                 <Input
                   type="select"
-                  id="roommateGender"
-                  name="roommateGender"
-                  value={formData.roommateGender}
+                  id="numberOfRoommates"
+                  name="numberOfRoommates"
+                  value={formData.numberOfRoommates}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="" disabled>
+                    Select number of roommates
+                  </option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                </Input>
+              </FormGroup>
+
+              <FormGroup>
+                <Label for="genderOfRoomate">Roommate Gender:</Label>
+                <Input
+                  type="select"
+                  id="genderOfRoomate"
+                  name="genderOfRoomate"
+                  value={formData.genderOfRoomate}
                   onChange={handleInputChange}
                   required
                 >
@@ -109,9 +152,8 @@ const Preference: React.FC = () => {
                   <option value="" disabled>
                     Select smoking preference
                   </option>
-                  <option value="often">Often</option>
-                  <option value="never">Never</option>
-                  <option value="sometimes">Sometimes/Ask me</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </Input>
               </FormGroup>
               <FormGroup>
@@ -127,18 +169,17 @@ const Preference: React.FC = () => {
                   <option value="" disabled>
                     Select drinking preference
                   </option>
-                  <option value="often">Often</option>
-                  <option value="never">Never</option>
-                  <option value="sometimes">Sometimes/Ask me</option>
+                  <option value="Yes">Yes</option>
+                  <option value="No">No</option>
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label for="temperature">Temperature:</Label>
+                <Label for="temp">Temperature:</Label>
                 <Input
                   type="select"
-                  id="temperature"
-                  name="temperature"
-                  value={formData.temperature}
+                  id="temp"
+                  name="temp"
+                  value={formData.temp}
                   onChange={handleInputChange}
                   required
                 >
@@ -151,12 +192,12 @@ const Preference: React.FC = () => {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label for="risetime">Rise Time:</Label>
+                <Label for="riseTime">Rise Time:</Label>
                 <Input
                   type="select"
-                  id="risetime"
-                  name="risetime"
-                  value={formData.risetime}
+                  id="riseTime"
+                  name="riseTime"
+                  value={formData.riseTime}
                   onChange={handleInputChange}
                   required
                 >
@@ -174,12 +215,12 @@ const Preference: React.FC = () => {
                 </Input>
               </FormGroup>
               <FormGroup>
-                <Label for="sleeptime">Sleep Time:</Label>
+                <Label for="sleepTime">Sleep Time:</Label>
                 <Input
                   type="select"
-                  id="sleeptime"
-                  name="sleeptime"
-                  value={formData.sleeptime}
+                  id="sleepTime"
+                  name="sleepTime"
+                  value={formData.sleepTime}
                   onChange={handleInputChange}
                   required
                 >
