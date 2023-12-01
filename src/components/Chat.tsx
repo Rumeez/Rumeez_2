@@ -114,7 +114,7 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
       <button onClick={() => setShowRenameField(!showRenameField)}>Rename Chat</button>
     </div>
     {showRenameField && (
-      <div style={{ textAlign: 'right', marginRight: '20px' }}>
+      <div style={{ textAlign: 'right', marginRight: '20px', marginTop: '20px' }}>
         <input
           type="text"
           value={newChatName}
