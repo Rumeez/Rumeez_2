@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
   Container,
@@ -11,6 +11,8 @@ import {
   Input,
   Button,
 } from 'reactstrap';
+import { UserContext } from '../context/user-context';
+
 
 const User: React.FC = () => {
   const initialFormData = {
@@ -24,13 +26,18 @@ const User: React.FC = () => {
 
   const [formData, setFormData] = useState(initialFormData);
   const navigate = useNavigate();
+  const context = useContext(UserContext);
+  
 
   // Load user information from localStorage when the component mounts
   useEffect(() => {
+    
     const savedData = localStorage.getItem('userFormData');
     if (savedData) {
       setFormData(JSON.parse(savedData));
     }
+    if(!context.user.isLoggedIn)
+      navigate('/');
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

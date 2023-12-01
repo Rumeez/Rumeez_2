@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Container,
   Row,
@@ -11,6 +11,7 @@ import {
 } from 'reactstrap';
 
 import {  useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/user-context';
 
 const Preference: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +26,9 @@ const Preference: React.FC = () => {
   });
   const navigate = useNavigate();
   const [originalFormData] = useState({ ...formData }); // Store the original form data
+  const context = useContext(UserContext);  
+  if(!context.user.isLoggedIn)
+    navigate('/');
 
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
