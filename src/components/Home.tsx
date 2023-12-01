@@ -12,6 +12,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
   console.log(context.user.firstName);
   console.log(context.user.userId?.toString());
+  const [responseText, setResText] = useState<string>()
 
   useEffect(() => {
     const backendUrl = 'http://localhost:8000/look';
@@ -76,6 +77,76 @@ const Home: React.FunctionComponent = (): JSX.Element => {
         userToActionData.usersLiked.includes(userId)
       ) {
         // If both users have liked each other, show a matched popup
+        const data = {
+            chatName: "NewChat",
+        };
+        try {
+          const response = await fetch('http://localhost:8000/chat/create', {
+              credentials: 'include',
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(data)
+            });
+            if(!response.ok)
+            {
+                throw new Error('Network response was not ok');
+            }
+            response.text().then(async responseT => {
+              const chatId = JSON.parse(responseT);
+              console.log("this should be the ne chatid");
+              console.log(chatId);
+              const user1Data = {
+                  chatId: chatId,
+                  userId: userId,
+              };
+              console.log(user1Data);
+              try {
+                const response = await fetch('http://localhost:8000/chat/join', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user1Data)
+                  });
+                  if(!response.ok)
+                  {
+                      throw new Error('Network response was not ok');
+                  }
+              } catch (error) {
+                  console.error('Error:', error);
+              }
+              
+              const user2Data = {
+                chatId: chatId,
+                userId: userToActionId,
+              };
+              try {
+                const response = await fetch('http://localhost:8000/chat/join', {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(user2Data)
+                  });
+                  if(!response.ok)
+                  {
+                      throw new Error('Network response was not ok');
+                  }
+              } catch (error) {
+                  console.error('Error:', error);
+              }
+
+            }).catch(error => {
+              console.error('Error:', error);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
         alert('Matched!'); // You can replace this with a more sophisticated popup logic
       }
 
