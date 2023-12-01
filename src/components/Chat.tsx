@@ -6,7 +6,7 @@ import { Card, CardBody } from 'reactstrap';
 
 const Chat: React.FunctionComponent = (): JSX.Element => {
     const { chatId } = useParams();
-    const [userEmail, setUserEmail] = useState();
+    const [userName, setUserName] = useState<string>();
     const [messages, setMessages] = useState([[]])
     const [chatName, setName] = useState<string>();
     const [showRenameField, setShowRenameField] = useState(false);
@@ -44,7 +44,10 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
             return response.json();
         })
         .then(data => {
-            setUserEmail(data.email);
+            const firstname = data.firstname;
+            const lastname = data.lastname;
+            const username = firstname + " " + lastname;
+            setUserName(username);
         })
         .catch(error => console.error('Fetch error', error));
     }, []); 
@@ -53,7 +56,7 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
 
     const handleSendMessage = async () => {
           const data = {
-            userEmail: userEmail,
+            username: userName,
             chatId: chatId,
             message: inputMessage,
         };
@@ -126,20 +129,20 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
       maxHeight: 'calc(100vh - 60px)',  // Adjust for viewport height minus text box height
       overflowY: 'auto'
     }}>
-      {messages.map(([email, message], index) => (
+      {messages.map(([name, message], index) => (
         <Card 
           key={index} 
           style={{ 
             maxWidth: '60%', 
             margin: '10px auto', 
-            textAlign: email === userEmail ? 'left' : 'right',
-            backgroundColor: email === userEmail ? 'lightblue' : 'yellow',
-            float: email === userEmail ? 'left' : 'right',
+            textAlign: name === userName ? 'left' : 'right',
+            backgroundColor: name === userName ? 'lightblue' : 'yellow',
+            float: name === userName ? 'left' : 'right',
             clear: 'both' 
           }}
         >
           <CardBody>
-            <p><strong>{email}:</strong> {message}</p>
+            <p><strong>{name}:</strong> {message}</p>
           </CardBody>
         </Card>
       ))}
