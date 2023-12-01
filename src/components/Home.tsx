@@ -116,7 +116,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
                     <li><strong>Rise Time:</strong> {currentUserData.preferences.riseTime}</li>
                     <li><strong>Sleep Time:</strong> {currentUserData.preferences.sleepTime}</li>
                     <li><strong>Temperature:</strong> {currentUserData.preferences.temp}</li>
-                    {/* Add more preferences as needed */}
+                   
                   </ul>
                 </Col>
               </Row>

@@ -8,6 +8,7 @@ import Chats from './components/Chats';
 import OptionsBar from './components/OptionsBar';
 import LoginChecker from './components/LoginChecker';
 import MyProfile from './components/MyProfile';
+import Search from './components/Seach';
 import AccountVerification from './components/AccountVerification';
 import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
@@ -26,6 +27,7 @@ class App extends React.Component<{}, {}> {
             <Route path="user" element={<User />} />
             <Route path="chats" element={<Chats />} />
              <Route path="signup" element={<SignUp />} />
+             <Route path="search" element={<Search />} />
              <Route path = "myprofile" element = {<MyProfile/>}/>
              <Route path="preference" element={<Preference />} />
             <Route path="verify" element={<Outlet />}>

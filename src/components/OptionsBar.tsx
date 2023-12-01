@@ -76,6 +76,9 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
             <NavItem>
               <NavLink onClick={()=>navigate("/chats")} >Chats</NavLink>
             </NavItem>
+            <NavItem>
+              <NavLink onClick={()=>navigate("/search")} >Search</NavLink>
+            </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
                 User
