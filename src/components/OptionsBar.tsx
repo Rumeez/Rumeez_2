@@ -1,4 +1,3 @@
-
 import React, { useState, useContext } from 'react';
 import {
   Collapse,
@@ -17,17 +16,15 @@ import {
 import { UserContext } from "../context/user-context";
 import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
-// import Nav from 'react-bootstrap/Nav';
 
 const OptionsBar: React.FunctionComponent = (): JSX.Element => {
   const context = useContext(UserContext);
+  const navigate = useNavigate();
 
   const [isOpen, setIsOpen] = useState(true);
   const [modal, setModal] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
-
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -54,67 +51,69 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
     }
 
     navigate('/');
-    navigate(0)
+    navigate(0);
   };
 
   return (
     <div>
-      <Navbar color="light" /*full="true"*/ expand="md" container="fluid">
+      <Navbar color="light" expand="md" container="fluid">
         <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/home")}>Home</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/user")} >User Information</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/preference")} >Preferences</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/chats")} >Chats</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink onClick={()=>navigate("/search")} >Search</NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                User
-              </DropdownToggle>
-              <DropdownMenu left="true">
-                <DropdownItem>Password reset</DropdownItem>
-                <DropdownItem>Account verification</DropdownItem>
-                <DropdownItem>
-                  <NavItem>
-                  <NavLink onClick={()=>navigate("/myprofile")} >View My Profile</NavLink>
-                  </NavItem>
-                  </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
+            {context.user.isLoggedIn && (
+              <>
+                <NavItem>
+                  <NavLink onClick={() => navigate("/home")}>Home</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink onClick={() => navigate("/preference")}>Preferences</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink onClick={() => navigate("/chats")}>Chats</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink onClick={() => navigate("/search")}>Search</NavLink>
+                </NavItem>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    User
+                  </DropdownToggle>
+                  <DropdownMenu left="true">
+                    <DropdownItem>Password reset</DropdownItem>
+                    <DropdownItem>Account verification</DropdownItem>
+                    <DropdownItem>
+                      <NavItem>
+                        <NavLink onClick={() => navigate("/myprofile")}>View My Profile</NavLink>
+                      </NavItem>
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <NavItem>
+                  <NavLink onClick={() => navigate("/user")}>User Information</NavLink>
+                </NavItem>
+              </>
+            )}
           </Nav>
-          {!context.user.isLoggedIn ?
-            <div>
-              <Nav>
+          <Nav>
+            {!context.user.isLoggedIn ? (
+              <>
                 <NavItem>
-                  <NavLink onClick={()=>navigate("/signup")}>Sign up</NavLink>
+                  <NavLink onClick={() => navigate("/signup")}>Sign up</NavLink>
                 </NavItem>
                 <NavItem>
-                  <NavLink onClick={()=>setModal(!modal)}>Login</NavLink>
+                  <NavLink onClick={() => setModal(!modal)}>Login</NavLink>
                 </NavItem>
-              </Nav>
-            </div>
-            :
-            <Nav>
+              </>
+            ) : (
               <NavItem>
                 <NavLink onClick={handleLogout}>Logout</NavLink>
               </NavItem>
-            </Nav>
-          }
+            )}
+          </Nav>
         </Collapse>
-        <Modal isOpen={modal} toggle={()=>setModal(!modal)}>
-          <Login setModal={setModal}/>
+        <Modal isOpen={modal} toggle={() => setModal(!modal)}>
+          <Login setModal={setModal} />
         </Modal>
       </Navbar>
     </div>
