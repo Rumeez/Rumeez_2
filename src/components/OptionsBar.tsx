@@ -59,7 +59,7 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
 
   return (
     <div>
-      <Navbar color="light" light={true} /*full="true"*/ expand="md" container="fluid">
+      <Navbar color="light" /*full="true"*/ expand="md" container="fluid">
         <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

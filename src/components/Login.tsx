@@ -62,7 +62,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           firstName: data.firstname, // Adjust according to the actual response structure
           lastName: data.lastname,   // Adjust according to the actual response structure
           email: email,
-          verified: data.verified
+          verified: data.verified,
         },
       });
 
@@ -108,7 +108,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
               Login
             </Button>
           </Form>
-        {invalidLogin ? <CardText style={{color: 'red'}}>Invalid username or password!</CardText>: <></>}
+        {invalidLogin ? <CardText className="mt-2" style={{color: 'red'}}>Invalid username or password!</CardText>: <></>}
         </CardBody>
         <CardFooter><NavLink onClick={()=>setModal(false)} to="/accountrecovery">Forgot password?</NavLink></CardFooter>
       </Card>

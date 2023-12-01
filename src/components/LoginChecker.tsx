@@ -1,36 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { useEffect, useContext } from "react";
 import { UserContext } from "../context/user-context";
 import getCookie from "../util/getCookie";
 import { useNavigate } from "react-router-dom";
+import { Spinner } from "reactstrap";
 
-const LoginChecker: React.FunctionComponent = (): JSX.Element => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const LoginChecker: React.FunctionComponent<Props> = (props: Props): JSX.Element => {
   const context = useContext(UserContext);
+  const [checking, setChecking] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (getCookie("token") && !context.user.isLoggedIn) {
-      try {
-        const resource: string = "http://localhost:8000/user/";
-        const headers: HeadersInit = {
-          "Content-Type": "application/json",
-        };
-        const req: RequestInit = {
-          headers: headers,
-          method: "GET",
-          credentials: "include",
-          mode: "cors",
-        };
+      const resource: string = "http://localhost:8000/user/";
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+      };
+      const req: RequestInit = {
+        headers: headers,
+        method: "GET",
+        credentials: "include",
+        mode: "cors",
+      };
 
-        fetch(resource, req).then((response: Response) => {
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          
-          return response.json();
-        })
+      fetch(resource, req).then((response: Response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        return response.json();
+      })
         .then((data: any) => {
-  
+
           // Update the context with the user information
           context.updateState({
             user: {
@@ -38,19 +43,29 @@ const LoginChecker: React.FunctionComponent = (): JSX.Element => {
               firstName: data.firstname, // Adjust according to the actual response structure
               lastName: data.lastname,   // Adjust according to the actual response structure
               email: data.email,
-              verified: data.verified
+              verified: data.verified,
             },
           });
-  
-          navigate('/home');
+
+          setChecking(false);
+          // navigate('/home');
         })
-      } catch {
-        console.log("No existing login credentials");
-      }
+        .catch((err: any) => {
+          console.log("Expires login credentials");
+          setChecking(false);
+        })
+    } else {
+      setChecking(false);
     }
   }, [context, navigate]);
 
-  return <></>
+  return <>
+    {checking ?
+      <Spinner style={{ justifyContent: 'center', alignItems: 'center' }}></Spinner>
+      :
+      props.children
+    }
+  </>
 }
 
 export default LoginChecker;
