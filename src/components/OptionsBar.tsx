@@ -15,7 +15,7 @@ import {
   Modal,
 } from 'reactstrap';
 import { UserContext } from "../context/user-context";
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Login from './Login';
 // import Nav from 'react-bootstrap/Nav';
 

@@ -10,7 +10,7 @@ import {
   Button,
 } from 'reactstrap';
 
-import { Link, redirect, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 
 const Preference: React.FC = () => {
   const [formData, setFormData] = useState({
