@@ -10,22 +10,33 @@ import LoginChecker from './components/LoginChecker';
 import AccountVerification from './components/AccountVerification';
 import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
+import SignUp from './components/SignUp';
+import Preference from './components/Preference';
+import AccountRecovery from './components/AccountRecovery';
+import RecoveryToken from './components/RecoveryToken';
+
 class App extends React.Component<{}, {}> {
   render() {
     return (
       <UserContextProvider>
         <Router>
           <LoginChecker>
-          <OptionsBar />
-          <Routes>
-            <Route path="home" element={<Home />} />
-            <Route path="user" element={<User />} />
-            <Route path="chats" element={<Chats />} />
-            <Route path="verify" element={<Outlet />}>
-              <Route path=":vtoken" element={<VerificationToken />} />
-              <Route path="" element={<AccountVerification />} />
-            </Route>
-          </Routes>
+            <OptionsBar />
+            <Routes>
+              <Route path="home" element={<Home />} />
+              <Route path="user" element={<User />} />
+              <Route path="chats" element={<Chats />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="preference" element={<Preference />} />
+              <Route path="verify" element={<Outlet />}>
+                <Route path=":vtoken" element={<VerificationToken />} />
+                <Route path="" element={<AccountVerification />} />
+              </Route>
+              <Route path="recovery" element={<Outlet />}>
+                <Route path=":rtoken" element={<RecoveryToken />} />
+                <Route path="" element={<AccountRecovery />} />
+              </Route>
+            </Routes>
           </LoginChecker>
         </Router>
       </UserContextProvider>

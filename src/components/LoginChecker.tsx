@@ -28,8 +28,8 @@ const LoginChecker: React.FunctionComponent<Props> = (props: Props): JSX.Element
       };
 
       fetch(resource, req).then((response: Response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        if (response.status !== 200) {
+          return Promise.reject("No bueno");
         }
 
         return response.json();
