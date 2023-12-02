@@ -12,6 +12,7 @@ import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
 import AccountRecovery from './components/AccountRecovery';
 import RecoveryToken from './components/RecoveryToken';
+import PasswordReset from './components/PasswordReset';
 
 class App extends React.Component<{}, {}> {
   render() {
@@ -32,6 +33,7 @@ class App extends React.Component<{}, {}> {
                 <Route path=":rtoken" element={<RecoveryToken />} />
                 <Route path="" element={<AccountRecovery />} />
               </Route>
+              <Route path="passwordreset" element={<PasswordReset />} />
             </Routes>
           </LoginChecker>
         </Router>
