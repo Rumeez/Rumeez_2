@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import io, { Socket } from 'socket.io-client'
-import { Button } from "reactstrap"
 import { useParams } from 'react-router-dom';
 import { Card, CardBody } from 'reactstrap';
 

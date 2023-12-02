@@ -80,13 +80,9 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
                     User
                   </DropdownToggle>
                   <DropdownMenu left="true">
-                    <DropdownItem>Password reset</DropdownItem>
-                    <DropdownItem>Account verification</DropdownItem>
-                    <DropdownItem>
-                      <NavItem>
-                        <NavLink onClick={() => navigate("/myprofile")}>View My Profile</NavLink>
-                      </NavItem>
-                    </DropdownItem>
+                    <DropdownItem onClick={() => navigate("/passwordreset")}>Password reset</DropdownItem>
+                    <DropdownItem onClick={() => navigate("/verify")}>Account verification</DropdownItem>
+                    <DropdownItem onClick={() => navigate("/myprofile")}>View my profile</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <NavItem>

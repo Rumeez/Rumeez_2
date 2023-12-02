@@ -32,10 +32,10 @@ class App extends React.Component<{}, {}> {
               <Route path="home" element={<Home />} />
               <Route path="user" element={<User />} />
               <Route path="chats" element={<Chats />} />
-             <Route path="signup" element={<SignUp />} />
-             <Route path="search" element={<Search />} />
-             <Route path = "myprofile" element = {<MyProfile/>}/>
-             <Route path="preference" element={<Preference />} />
+              <Route path="signup" element={<SignUp />} />
+              <Route path="search" element={<Search />} />
+              <Route path="myprofile" element={<MyProfile />} />
+              <Route path="preference" element={<Preference />} />
               <Route path="verify" element={<Outlet />}>
                 <Route path=":vtoken" element={<VerificationToken />} />
                 <Route path="" element={<AccountVerification />} />
@@ -45,8 +45,8 @@ class App extends React.Component<{}, {}> {
                 <Route path="" element={<AccountRecovery />} />
               </Route>
               <Route path="passwordreset" element={<PasswordReset />} />
-            <Route path="/chat/:chatId" element={<Chat />} />
-              <Route path="" element={<Root />} /> 
+              <Route path="/chat/:chatId" element={<Chat />} />
+              <Route path="" element={<Root />} />
             </Routes>
           </LoginChecker>
         </Router>
