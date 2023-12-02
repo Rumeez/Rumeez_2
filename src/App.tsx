@@ -14,9 +14,11 @@ import Root from './components/Root';
 import AccountVerification from './components/AccountVerification';
 import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
+import AccountRecovery from './components/AccountRecovery';
+import RecoveryToken from './components/RecoveryToken';
+import PasswordReset from './components/PasswordReset';
 import SignUp from './components/SignUp';
 import Preference from './components/Preference';
-
 import Chat from './components/Chat'
 
 class App extends React.Component<{}, {}> {
@@ -25,22 +27,27 @@ class App extends React.Component<{}, {}> {
       <UserContextProvider>
         <Router>
           <LoginChecker>
-          <OptionsBar />
-          <Routes>
-            <Route path="home" element={<Home />} />
-            <Route path="user" element={<User />} />
-            <Route path="chats" element={<Chats />} />
+            <OptionsBar />
+            <Routes>
+              <Route path="home" element={<Home />} />
+              <Route path="user" element={<User />} />
+              <Route path="chats" element={<Chats />} />
              <Route path="signup" element={<SignUp />} />
              <Route path="search" element={<Search />} />
              <Route path = "myprofile" element = {<MyProfile/>}/>
              <Route path="preference" element={<Preference />} />
-            <Route path="verify" element={<Outlet />}>
-              <Route path=":vtoken" element={<VerificationToken />} />
-              <Route path="" element={<AccountVerification />} />
-            </Route>
+              <Route path="verify" element={<Outlet />}>
+                <Route path=":vtoken" element={<VerificationToken />} />
+                <Route path="" element={<AccountVerification />} />
+              </Route>
+              <Route path="recovery" element={<Outlet />}>
+                <Route path=":rtoken" element={<RecoveryToken />} />
+                <Route path="" element={<AccountRecovery />} />
+              </Route>
+              <Route path="passwordreset" element={<PasswordReset />} />
             <Route path="/chat/:chatId" element={<Chat />} />
               <Route path="" element={<Root />} /> 
-          </Routes>
+            </Routes>
           </LoginChecker>
         </Router>
       </UserContextProvider>

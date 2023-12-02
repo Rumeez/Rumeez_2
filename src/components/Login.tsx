@@ -10,11 +10,10 @@ import {
   CardHeader,
   Button,
   CardText,
-  CardFooter
+  CardFooter,
 } from "reactstrap";
 import { UserContext } from "../context/user-context";
-import { useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 
 interface ILoginProps {
   setModal(val: boolean): void;
@@ -94,6 +93,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
             <FormGroup>
               <Label for="exampleEmail">Email</Label>
               <Input
+                required
                 type="email"
                 name="email"
                 placeholder="youremail@email.com"
@@ -105,6 +105,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
             <FormGroup>
               <Label for="examplePassword">Password</Label>
               <Input
+                required
                 type="password"
                 name="password"
                 placeholder="password"
@@ -119,7 +120,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
           </Form>
         {invalidLogin ? <CardText className="mt-2" style={{color: 'red'}}>Invalid username or password!</CardText>: <></>}
         </CardBody>
-        <CardFooter><NavLink onClick={()=>setModal(false)} to="/accountrecovery">Forgot password?</NavLink></CardFooter>
+        <CardFooter><NavLink onClick={()=>{setModal(false)}} to='/recovery'>Forgot password?</NavLink></CardFooter>
       </Card>
       {/* <p>Logged in guy: {context.user.firstName ? context.user.firstName : ""}</p> */}
     </div>
