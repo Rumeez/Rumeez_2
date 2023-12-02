@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { Button, Container } from "reactstrap"
 
 const AccountVerification: React.FunctionComponent = (): JSX.Element => {

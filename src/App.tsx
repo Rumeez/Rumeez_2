@@ -10,8 +10,6 @@ import LoginChecker from './components/LoginChecker';
 import AccountVerification from './components/AccountVerification';
 import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
-import SignUp from './components/SignUp';
-import Preference from './components/Preference';
 import AccountRecovery from './components/AccountRecovery';
 import RecoveryToken from './components/RecoveryToken';
 
@@ -26,8 +24,6 @@ class App extends React.Component<{}, {}> {
               <Route path="home" element={<Home />} />
               <Route path="user" element={<User />} />
               <Route path="chats" element={<Chats />} />
-              <Route path="signup" element={<SignUp />} />
-              <Route path="preference" element={<Preference />} />
               <Route path="verify" element={<Outlet />}>
                 <Route path=":vtoken" element={<VerificationToken />} />
                 <Route path="" element={<AccountVerification />} />
