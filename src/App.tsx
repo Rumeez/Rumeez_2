@@ -7,6 +7,7 @@ import User from './components/User';
 import Chats from './components/Chats';
 import OptionsBar from './components/OptionsBar';
 import LoginChecker from './components/LoginChecker';
+
 import MyProfile from './components/MyProfile';
 import Search from './components/Seach';
 import Root from './components/Root';
@@ -15,6 +16,8 @@ import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
 import SignUp from './components/SignUp';
 import Preference from './components/Preference';
+
+import Chat from './components/Chat'
 
 class App extends React.Component<{}, {}> {
   render() {
@@ -35,6 +38,7 @@ class App extends React.Component<{}, {}> {
               <Route path=":vtoken" element={<VerificationToken />} />
               <Route path="" element={<AccountVerification />} />
             </Route>
+            <Route path="/chat/:chatId" element={<Chat />} />
               <Route path="" element={<Root />} /> 
           </Routes>
           </LoginChecker>
