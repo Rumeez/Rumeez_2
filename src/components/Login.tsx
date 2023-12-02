@@ -96,7 +96,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
               <Input
                 type="email"
                 name="email"
-                placeholder="jwick@continental.com"
+                placeholder="youremail@email.com"
                 onChange={(e) => {
                   setEmail(e.target.value);
                 }}
@@ -107,7 +107,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
               <Input
                 type="password"
                 name="password"
-                placeholder="babayaga"
+                placeholder="password"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}

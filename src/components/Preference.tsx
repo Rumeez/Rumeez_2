@@ -98,7 +98,7 @@ const Preference: React.FC = () => {
                   <option value="plaza triple">Plaza Triple</option>
                   <option value="plaza double priv bath">Plaza Double Priv Bath</option>
                   <option value="plaza triple priv bath">Plaza Triple Priv Bath</option>
-                  <option value="deluxe double">Deluxe Triple</option>
+                  <option value="deluxe double">Deluxe Double</option>
                   <option value="deluxe triple">Deluxe Triple</option>
                   <option value="classic double">Classic Double</option>
                   <option value="classic triple">Classic Triple</option>
@@ -141,6 +141,7 @@ const Preference: React.FC = () => {
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="nonbinary">Nonbinary</option>
+                  <option value="No preference">No preference</option>
                 </Input>
               </FormGroup>
               <FormGroup>

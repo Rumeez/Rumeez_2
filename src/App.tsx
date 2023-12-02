@@ -9,6 +9,7 @@ import OptionsBar from './components/OptionsBar';
 import LoginChecker from './components/LoginChecker';
 import MyProfile from './components/MyProfile';
 import Search from './components/Seach';
+import Root from './components/Root';
 import AccountVerification from './components/AccountVerification';
 import VerificationToken from './components/VerificationToken';
 import { Outlet } from 'react-router-dom';
@@ -34,6 +35,7 @@ class App extends React.Component<{}, {}> {
               <Route path=":vtoken" element={<VerificationToken />} />
               <Route path="" element={<AccountVerification />} />
             </Route>
+              <Route path="" element={<Root />} /> 
           </Routes>
           </LoginChecker>
         </Router>

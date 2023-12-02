@@ -1,22 +1,22 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/user-context';
-import { Container, Row, Col, Button, Card, CardBody } from 'reactstrap';
+import { Container, Row, Col, Button, Card, CardBody, Spinner } from 'reactstrap';
 
 const Home: React.FunctionComponent = (): JSX.Element => {
   const [data, setData] = useState<any>(null);
   const [currentUserIndex, setCurrentUserIndex] = useState(0);
   const [currentUserData, setCurrentUserData] = useState<any>(null);
-  const [loading, setLoading] = useState(false); // Added loading state
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  console.log(context.user.firstName);
-  console.log(context.user.userId?.toString());
 
   useEffect(() => {
     const backendUrl = 'http://localhost:8000/look';
 
     const fetchData = async () => {
+      setLoading(true);
+
       try {
         const response = await fetch(backendUrl, { credentials: 'include' });
         if (!response.ok) {
@@ -38,10 +38,11 @@ const Home: React.FunctionComponent = (): JSX.Element => {
       } catch (error) {
         console.error('Error fetching data:', error);
 
-        // Redirect to localhost:3000/ if not logged in
         if (!context.user.isLoggedIn) {
           navigate('/');
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -49,8 +50,8 @@ const Home: React.FunctionComponent = (): JSX.Element => {
   }, [context, navigate, currentUserIndex]);
 
   const handleAction = async (actionType: 'like' | 'skip') => {
-    if (loading) return; // Do nothing if the previous action is still in progress
-    setLoading(true); // Set loading to true to prevent multiple actions
+    if (loading) return;
+    setLoading(true);
 
     try {
       const userIds = Object.keys(data || {});
@@ -64,7 +65,6 @@ const Home: React.FunctionComponent = (): JSX.Element => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Check if both users have liked each other
       const loggedInUser = await fetch(`http://localhost:8000/look/getuser/${userId}`, { credentials: 'include' });
       const loggedInUserData = await loggedInUser.json();
 
@@ -75,23 +75,22 @@ const Home: React.FunctionComponent = (): JSX.Element => {
         loggedInUserData.usersLiked.includes(userToActionId) &&
         userToActionData.usersLiked.includes(userId)
       ) {
-        // If both users have liked each other, show a matched popup
-        alert('Matched!'); // You can replace this with a more sophisticated popup logic
+        alert('Matched!');
       }
 
-      // After like/skip, move to the next user
       setCurrentUserIndex((prevIndex) => (prevIndex + 1) % userIds.length);
     } catch (error) {
       console.error(`Error during ${actionType}:`, error);
     } finally {
-      setLoading(false); // Reset loading to false after the action is completed
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ backgroundColor: '#87CEEB', height: '100vh' }}>
-      <Container className="mt-4" style={{ backgroundColor: '#FFD700', padding: '20px', borderRadius: '10px' }}>
-        {data && currentUserData && (
+    <div style={{ backgroundColor: '#ffffff', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <Container className="mt-4" style={{ backgroundColor: '#87ceeb', padding: '20px', borderRadius: '10px', position: 'relative' }}>
+        {loading && <Spinner color="primary" />}
+        {data && currentUserData && !loading && (
           <Card>
             <CardBody>
               <Row className="mb-4">
@@ -103,40 +102,45 @@ const Home: React.FunctionComponent = (): JSX.Element => {
                   <p><strong>Year:</strong> {currentUserData.year}</p>
                   <p><strong>Major:</strong> {currentUserData.major}</p>
                   <p><strong>About Me:</strong> {currentUserData.bio}</p>
-                  <p><strong>Compatibility Score:</strong> {((data[Object.keys(data)[currentUserIndex]] || 0) * 100).toFixed(2)}%</p>
                 </Col>
                 <Col>
                   <h3>Preferences</h3>
-                  <ul>
-                    <li><strong>Dorm Type:</strong> {currentUserData.preferences.dormType}</li>
-                    <li><strong>Number of Roommates:</strong> {currentUserData.preferences.numberOfRoommates}</li>
-                    <li><strong>Gender of Roommate:</strong> {currentUserData.preferences.genderOfRoomate}</li>
-                    <li><strong>Smoking:</strong> {currentUserData.preferences.smoking ? 'Yes' : 'No'}</li>
-                    <li><strong>Drinking:</strong> {currentUserData.preferences.drinking ? 'Yes' : 'No'}</li>
-                    <li><strong>Rise Time:</strong> {currentUserData.preferences.riseTime}</li>
-                    <li><strong>Sleep Time:</strong> {currentUserData.preferences.sleepTime}</li>
-                    <li><strong>Temperature:</strong> {currentUserData.preferences.temp}</li>
-                   
-                  </ul>
-                </Col>
-              </Row>
-              <Row>
-                <Col className="text-center">
-                  <Button color="success" size="lg" onClick={() => handleAction('like')} className="me-2">
-                    Room Together
-                  </Button>
-                  <Button color="primary" size="lg" onClick={() => handleAction('skip')}>
-                    Next
-                  </Button>
+                  <p><strong>Dorm Type:</strong> {currentUserData.preferences.dormType}</p>
+                  <p><strong>Number of Roommates:</strong> {currentUserData.preferences.numberOfRoommates}</p>
+                  <p><strong>Gender of Roommate:</strong> {currentUserData.preferences.genderOfRoomate}</p>
+                  <p><strong>Smoking:</strong> {currentUserData.preferences.smoking ? 'Yes' : 'No'}</p>
+                  <p><strong>Drinking:</strong> {currentUserData.preferences.drinking ? 'Yes' : 'No'}</p>
+                  <p><strong>Rise Time:</strong> {currentUserData.preferences.riseTime}</p>
+                  <p><strong>Sleep Time:</strong> {currentUserData.preferences.sleepTime}</p>
+                  <p><strong>Temperature:</strong> {currentUserData.preferences.temp}</p>
                 </Col>
               </Row>
             </CardBody>
           </Card>
         )}
       </Container>
+  
+      {/* Compatibility Score */}
+      {data && currentUserData && !loading && (
+        <div style={{ marginTop: '20px', textAlign: 'center' }}>
+          <h2 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>
+            Compatibility Score: {((data[Object.keys(data)[currentUserIndex]] || 0) * 100).toFixed(2)}%
+          </h2>
+          {/* Room Together and Skip Buttons */}
+          <div>
+            <Button color="success" size="lg" onClick={() => handleAction('like')} className="me-2">
+              Room Together
+            </Button>
+            <Button color="primary" size="lg" onClick={() => handleAction('skip')}>
+              Next
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
-
+  
+  
 };
 
 export default Home;
