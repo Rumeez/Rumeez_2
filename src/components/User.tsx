@@ -28,8 +28,6 @@ const User: React.FC = () => {
   const navigate = useNavigate();
   const context = useContext(UserContext);
   
-
-  // Load user information from localStorage when the component mounts
   useEffect(() => {
     
     const savedData = localStorage.getItem('userFormData');
@@ -69,19 +67,12 @@ const User: React.FC = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      // Assuming your backend responds with a success status
-      // Handle the response as needed, e.g., show a success message
       console.log('User info updated successfully!');
-
-      // Save the updated form data to local storage
       localStorage.setItem('userFormData', JSON.stringify(formData));
-
-      // Check if the user has come from the Signup component
       alert('Updated User Info');
       navigate('/home');
     } catch (error) {
       console.error('Error updating user info:', error);
-      // Handle errors, e.g., show an error message to the user
     }
   };
 

@@ -23,7 +23,7 @@ const Search: React.FC = (): JSX.Element => {
         return response.json();
       })
       .then(data => {
-        setSearchResults(data); // Set the search results in state
+        setSearchResults(data); 
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -64,7 +64,7 @@ const Search: React.FC = (): JSX.Element => {
                   <p><strong>Major:</strong> {userData.major}</p>
                   <p><strong>About Me:</strong> {userData.bio}</p>
 
-                  {/* Display Preferences */}
+                 
                   <h4>Preferences</h4>
                   <ul>
                     <li><strong>Dorm Type:</strong> {userData.preferences.dormType}</li>

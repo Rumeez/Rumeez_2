@@ -1,6 +1,6 @@
 body {
   /* Use linear-gradient for the gradient effect */
-  background: linear-gradient(to top,/* #107ff6*/ #f9f9f9 , #fdfcfc 35%);
+  background: linear-gradient(to top,/* #107ff6*/ #d8b5b5 , #e8d2d2 50%);
   /* Set background properties to cover the entire viewport */
   background-size: cover;
   background-repeat: no-repeat;

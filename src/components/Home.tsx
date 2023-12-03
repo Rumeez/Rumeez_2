@@ -147,7 +147,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
             console.error('Error:', error);
         }
 
-        alert('Matched!'); // You can replace this with a more sophisticated popup logic
+        alert('Matched!'); 
       }
 
       setCurrentUserIndex((prevIndex) => (prevIndex + 1) % userIds.length);
@@ -159,7 +159,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
   };
 
   return (
-    <div style={{ backgroundColor: '#ffffff', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ backgroundColor: '#d8b5b5', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
       <Container className="mt-4" style={{ backgroundColor: '#87ceeb', padding: '20px', borderRadius: '10px', position: 'relative' }}>
         {loading && <Spinner color="primary" />}
         {data && currentUserData && !loading && (
@@ -191,8 +191,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
           </Card>
         )}
       </Container>
-  
-      {/* Compatibility Score */}
+
       {data && currentUserData && !loading && (
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
           <h2 style={{ fontWeight: 'bold', fontSize: '24px', marginBottom: '10px' }}>

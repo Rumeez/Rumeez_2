@@ -36,13 +36,13 @@ const LoginChecker: React.FunctionComponent<Props> = (props: Props): JSX.Element
       })
         .then((data: any) => {
 
-          // Update the context with the user information
+
           
           context.updateState({
             user: {
               isLoggedIn: true,
-              firstName: data.firstname, // Adjust according to the actual response structure
-              lastName: data.lastname,   // Adjust according to the actual response structure
+              firstName: data.firstname, 
+              lastName: data.lastname,   
               userId: data.userId,
               email: data.email,
               verified: data.verified,

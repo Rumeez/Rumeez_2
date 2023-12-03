@@ -47,7 +47,6 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
 
     } catch (error) {
       console.error('Error during logout:', error);
-      // Handle the error, e.g., display an error message to the user
     }
 
     navigate('/');

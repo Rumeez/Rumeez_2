@@ -58,8 +58,8 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
       context.updateState({
         user: {
           isLoggedIn: true,
-          firstName: data.firstname, // Adjust according to the actual response structure
-          lastName: data.lastname,   // Adjust according to the actual response structure
+          firstName: data.firstname, 
+          lastName: data.lastname,   
           email: email,
           userId: data.userId,
           verified: data.verified
@@ -79,7 +79,7 @@ const Login: React.FunctionComponent<ILoginProps> = ({setModal}): JSX.Element =>
     } catch (error) {
       console.error('Error during login:', error);
       setInvalidLogin(true);
-      // Handle the error, e.g., display an error message to the user
+      
     }
   };
 

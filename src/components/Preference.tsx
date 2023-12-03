@@ -25,7 +25,7 @@ const Preference: React.FC = () => {
     temp: '',
   });
   const navigate = useNavigate();
-  const [originalFormData] = useState({ ...formData }); // Store the original form data
+  const [originalFormData] = useState({ ...formData });
   const context = useContext(UserContext);  
   if(!context.user.isLoggedIn)
     navigate('/');
@@ -57,20 +57,16 @@ const Preference: React.FC = () => {
         }),
       });
   
-      // Check if the response status is OK (200-299)
       if (response.ok) {
-        // Handle the case where the update was successful
+      
         console.log('Preferences updated successfully!');
         alert('Updated Preferenes Saved!')
         navigate('/home');
       } else {
-        // Handle the case where the server returns an error status
         console.error(`Preferences update failed. Status: ${response.status}`);
-        // You can handle different HTTP error statuses here if needed
       }
     } catch (error) {
       console.error('Error updating preferences:', error);
-      // Handle other errors, e.g., network issues
     }
   };
   

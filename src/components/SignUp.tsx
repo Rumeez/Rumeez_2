@@ -29,7 +29,6 @@ const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  // Load user information from localStorage when the component mounts
   useEffect(() => {
     const savedData = localStorage.getItem('userFormData');
     if (savedData) {
@@ -48,10 +47,6 @@ const Signup: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Handle form submission logic here
-
-    // Save the updated form data to local storage
     localStorage.setItem('userFormData', JSON.stringify(formData));
 
     try {
@@ -67,19 +62,12 @@ const Signup: React.FC = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-
-      // Assuming your backend responds with JSON data
       const result = await response.json();
-      
-
-      // Handle the response as needed, e.g., show a success message
       console.log('Signup successful!', result);
 
-      // Redirect to the home component
       navigate('/');
     } catch (error) {
       console.error('Error during signup:', error);
-      // Handle errors, e.g., show an error message to the user
     }
   };
 

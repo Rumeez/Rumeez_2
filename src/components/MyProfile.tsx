@@ -21,7 +21,7 @@ const MyProfile: React.FC = (): JSX.Element => {
         setUserData(user);
       } catch (error) {
         console.error('Error fetching user data:', error);
-        // Handle error, e.g., show an error message to the user
+        
       }
     };
 
@@ -43,7 +43,7 @@ const MyProfile: React.FC = (): JSX.Element => {
                 <p><strong>Major:</strong> {userData.major}</p>
                 <p><strong>About Me:</strong> {userData.bio}</p>
 
-                {/* Display Preferences */}
+         
                 <h4>Preferences</h4>
                 <ul>
                   <li><strong>Dorm Type:</strong> {userData.preferences.dormType}</li>
