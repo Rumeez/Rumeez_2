@@ -55,20 +55,20 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
 
   return (
     <div>
-      <Navbar color="light" expand="md" container="fluid">
+        <Navbar color="light" expand="md" >
         <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             {context.user.isLoggedIn && (
               <>
-                <NavItem>
+                <NavItem className="d-md-block ml-md-auto" >
                   <NavLink onClick={() => navigate("/home")}>Home</NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="d-md-block ml-md-auto">
                   <NavLink onClick={() => navigate("/preference")}>Preferences</NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="d-md-block ml-md-auto">
                   <NavLink onClick={() => navigate("/chats")}>Chats</NavLink>
                 </NavItem>
                 <NavItem>
