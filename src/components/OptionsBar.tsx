@@ -56,7 +56,17 @@ const OptionsBar: React.FunctionComponent = (): JSX.Element => {
   return (
     <div>
       <Navbar color="light" expand="md" container="fluid">
-        <NavbarBrand as={Link} to="/">Rumeez</NavbarBrand>
+        <NavbarBrand onClick={() => navigate("/")}>Rumeez</NavbarBrand>
+        <NavbarBrand onClick={() => navigate("/")}>
+          <img
+            alt="logo"
+            src="rumeez.png"
+            style={{
+              height: 40,
+              width: 40
+            }}
+          />
+        </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
