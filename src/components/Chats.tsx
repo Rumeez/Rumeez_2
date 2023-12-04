@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from "react";
-import io, { Socket } from 'socket.io-client'
 import { Button } from "reactstrap"
 import { useNavigate } from 'react-router-dom';
 
 const Chats: React.FunctionComponent = (): JSX.Element => {
   const [chats, setChats] = useState([]);
-  const [socket, setSocket] = useState<Socket | null>(null);
   const [chatNames, setNames] = useState<string[]>([]);
-  const [userEmail, setEmail] = useState<string>()
   const navigate = useNavigate();
 
   useEffect(() => 
   {
-    const newSocket = io("http://localhost:8000");
-    setSocket(newSocket);
     fetch('http://localhost:8000/user', {
     credentials: 'include' // Ensures cookies are included with the request
     })
@@ -28,13 +23,8 @@ const Chats: React.FunctionComponent = (): JSX.Element => {
       .then(data => {
           const userChats = data.chats;
           setChats(userChats);
-          setEmail(data.email);
       })
       .catch(error => console.error('Fetch error', error));
-
-      return () => {
-        if (newSocket) newSocket.close();
-      };
     }, []);
 
   useEffect(() => {
@@ -85,7 +75,7 @@ const Chats: React.FunctionComponent = (): JSX.Element => {
           }} 
           onClick={() => handleChatClick(id)}
         >
-          Chat: {chatNames[index]}
+          {chatNames[index]}
         </Button>
       ))}
     </div>

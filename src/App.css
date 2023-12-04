@@ -35,20 +35,28 @@ body {
   /* Add other styles as needed */
 }
 
-.animation-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 87.5vh;
-    margin-top: 20px; /* Adjust the margin top */
+.background-text-fill {
+  background-color: #317aa7ac;
+  padding: 10px;
+  border-radius: 10px;
 }
+
+.animation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 87.5vh;
+  margin-top: 30px; 
+}
+
 
 .text-animation {
   display: flex;
-  font-size: 3rem;
+  font-size: 6rem;
   color: yellow; /* Text color */
   margin-bottom: 10px; /* Adjust spacing between lines */
+  margin-left: 100px;
 }
 
 .text-animation span {
@@ -100,7 +108,7 @@ body {
 
 .text-animation-subheader {
   opacity: 0;
-  font-size: 1.5rem; /* Set font size */
+  font-size: 2.5rem; /* Set font size */
   color: yellow; /* Set text color */
   transition: opacity 0.5s ease; /* Define transition for opacity */
 }

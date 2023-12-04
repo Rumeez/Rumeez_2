@@ -10,8 +10,23 @@ const Home: React.FunctionComponent = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const context = useContext(UserContext);
-  const [responseText, setResText] = useState<string>()
 
+  const getUserName = async function(userId: string) {
+    try {
+      const response = await fetch(`http://localhost:8000/look/getuser/${userId}`, {
+          credentials: 'include' // Ensures cookies are included with the request
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      return data.firstname; 
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  }
   useEffect(() => {
     const backendUrl = 'http://localhost:8000/look';
 
@@ -77,8 +92,10 @@ const Home: React.FunctionComponent = (): JSX.Element => {
         userToActionData.usersLiked.includes(userId)
       ) {
         // If both users have liked each other, show a matched popup
+        const curName = await getUserName(userId as string);
+        const otherName = await getUserName(userToActionId as string);
         const data = {
-            chatName: "NewChat",
+            chatName: `NewChat: ${curName} and ${otherName}`,
         };
         try {
           const response = await fetch('http://localhost:8000/chat/create', {
@@ -95,7 +112,6 @@ const Home: React.FunctionComponent = (): JSX.Element => {
             }
             response.text().then(async responseT => {
               const chatId = JSON.parse(responseT);
-              console.log("this should be the ne chatid");
               console.log(chatId);
               const user1Data = {
                   chatId: chatId,

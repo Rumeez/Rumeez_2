@@ -19,6 +19,7 @@ const Root: React.FC = () => {
     return (
       <div className="background-container">
         <div className="animation-container">
+          <div className="background-text-fill">
           <div className="text-animation">
             <span>R</span>
             <span>u</span>
@@ -28,7 +29,8 @@ const Root: React.FC = () => {
             <span>z</span>
           </div>
           <div className={`text-animation-subheader ${showSubheader ? 'show' : ''}`}>
-            Matching Bruins to Bruins
+            Find your perfect UCLA roommate!
+        </div>
         </div>
         </div>
       </div>

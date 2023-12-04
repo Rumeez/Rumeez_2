@@ -107,7 +107,7 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
       textAlign: 'center',
       marginTop: '20px'
     }}>
-        {chatName}:
+        {chatName}
     </h2>
       <button onClick={() => setShowRenameField(!showRenameField)}>Rename Chat</button>
     </div>
@@ -133,9 +133,9 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
           style={{ 
             maxWidth: '60%', 
             margin: '10px auto', 
-            textAlign: name === userName ? 'left' : 'right',
-            backgroundColor: name === userName ? 'lightblue' : 'yellow',
-            float: name === userName ? 'left' : 'right',
+            textAlign: name !== userName ? 'left' : 'right',
+            backgroundColor: name !== userName ? 'lightblue' : 'rgb(255, 255, 153)',
+            float: name !== userName ? 'left' : 'right',
             clear: 'both' 
           }}
         >
