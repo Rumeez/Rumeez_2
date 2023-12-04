@@ -1,16 +1,38 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 
 const Root: React.FC = () => {
-  return (
-    <div style={{ textAlign: 'center', marginTop: '20vh' }}>
-      <div style={{ backgroundColor: '#87CEEB', padding: '20px', borderRadius: '10px', display: 'inline-block' }}>
-        <h1 style={{ fontSize: '10rem', margin: '0', color: '#FFF' }}>RUMEEZ</h1>
+    
+  const [showSubheader, setShowSubheader] = useState(false);
+  
+    useEffect(() => {
+      const delay = 1700; // Adjust delay as needed (in milliseconds)
+  
+      // Timeout to display subheader after the animation
+      const timer = setTimeout(() => {
+        setShowSubheader(true);
+      }, delay);
+  
+      // Clear the timeout when the component unmounts or when the delay changes
+      return () => clearTimeout(timer);
+    }, []);
+  
+    return (
+      <div className="background-container">
+        <div className="animation-container">
+          <div className="text-animation">
+            <span>R</span>
+            <span>u</span>
+            <span>m</span>
+            <span>e</span>
+            <span>e</span>
+            <span>z</span>
+          </div>
+          <div className={`text-animation-subheader ${showSubheader ? 'show' : ''}`}>
+            Matching Bruins to Bruins
+        </div>
+        </div>
       </div>
-      <div style={{ backgroundColor: '#FFD700', padding: '20px', borderRadius: '10px', marginTop: '10px' }}>
-        <p style={{ fontSize: '1.5rem', margin: '0' }}>Find your perfect UCLA roommate!</p>
-      </div>
-    </div>
-  );
-};
+    );
+  };
 
 export default Root;

@@ -159,8 +159,8 @@ const Home: React.FunctionComponent = (): JSX.Element => {
   };
 
   return (
-    <div style={{ backgroundColor: '#d8b5b5', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <Container className="mt-4" style={{ backgroundColor: '#87ceeb', padding: '20px', borderRadius: '10px', position: 'relative' }}>
+    <div style={{ backgroundColor: '#aee3f5', height: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <Container className="mt-4" style={{ backgroundColor: '#ffff00', padding: '20px', borderRadius: '10px', position: 'relative' }}>
         {loading && <Spinner color="primary" />}
         {data && currentUserData && !loading && (
           <Card>

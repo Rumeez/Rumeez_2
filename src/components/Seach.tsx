@@ -87,3 +87,4 @@ const Search: React.FC = (): JSX.Element => {
 };
 
 export default Search;
+export {};
