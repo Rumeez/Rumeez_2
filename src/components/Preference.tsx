@@ -228,7 +228,7 @@ const Preference: React.FC = () => {
                   <option value="" disabled>
                     Select sleep time preference
                   </option>
-                  <option value="5">5 am</option>
+                  <option value="7">7 pm</option>
                   <option value="8">8 pm</option>
                   <option value="9">9 pm</option>
                   <option value="10">10 pm</option>
