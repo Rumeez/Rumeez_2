@@ -69,7 +69,7 @@ const Chats: React.FunctionComponent = (): JSX.Element => {
         <Button 
           key={index} 
           style={{ 
-            backgroundColor: 'lightblue', // Alternate colors
+            backgroundColor: 'white', // Alternate colors
             color: 'black', // Text color for readability
             width: '60%' // Set a specific width for uniformity
           }} 

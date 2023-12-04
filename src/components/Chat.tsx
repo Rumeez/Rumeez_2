@@ -134,7 +134,7 @@ const Chat: React.FunctionComponent = (): JSX.Element => {
             maxWidth: '60%', 
             margin: '10px auto', 
             textAlign: name !== userName ? 'left' : 'right',
-            backgroundColor: name !== userName ? 'lightblue' : 'rgb(255, 255, 153)',
+            backgroundColor: name !== userName ? 'white' : 'rgb(255, 255, 153)',
             float: name !== userName ? 'left' : 'right',
             clear: 'both' 
           }}
