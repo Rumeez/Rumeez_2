@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Input, InputGroup, InputGroupText, Container, Row, Col, Card, CardBody } from 'reactstrap';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../context/user-context';
+import { Input, InputGroup, InputGroupText, Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
 
 const Search: React.FC = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
-
+  const context = useContext(UserContext);
   const handleSearchClick = () => {
     const searchQuery = { name: searchValue };
 
@@ -30,6 +31,10 @@ const Search: React.FC = (): JSX.Element => {
       });
 
     setSearchValue('');
+  };
+
+  const handleRoomTogetherClick = (userData: any) => {
+    const userId = context.user.userId;
   };
 
   return (
@@ -76,6 +81,11 @@ const Search: React.FC = (): JSX.Element => {
                     <li><strong>Sleep Time:</strong> {userData.preferences.sleepTime}</li>
                     <li><strong>Temperature:</strong> {userData.preferences.temp}</li>
                   </ul>
+                  <div>
+                    <Button color="success" size="lg" onClick={() => handleRoomTogetherClick(userData)}>
+                      Room Together
+                    </Button>
+                  </div>
                 </CardBody>
               </Card>
             </Col>
