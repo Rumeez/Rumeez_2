@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../context/user-context';
 import { Input, InputGroup, InputGroupText, Container, Row, Col, Card, CardBody, Button } from 'reactstrap';
 
@@ -6,6 +6,8 @@ const Search: React.FC = (): JSX.Element => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const context = useContext(UserContext);
+  const [userId, setUserId] = useState<string>();
+  const [userName, setUserName] = useState<string>()
   const handleSearchClick = () => {
     const searchQuery = { name: searchValue };
 
@@ -31,11 +33,106 @@ const Search: React.FC = (): JSX.Element => {
       });
 
     setSearchValue('');
+    setUserName(context.user.firstName);
+      setUserId(context.user.userId);
   };
 
-  const handleRoomTogetherClick = (userData: any) => {
-    const userId = context.user.userId;
+  const handleRoomTogetherClick = async (userData: any) => {
+    const userToActionName = userData.firstname;
+    console.log(userData);
+    const userToActionId = userData._id;
+    const actionType = 'like';
+    const actionUrl = `http://localhost:8000/look/${actionType}/${userId}/${userToActionId}`;
+
+    const response = await fetch(actionUrl, { method: 'POST', credentials: 'include' });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const loggedInUser = await fetch(`http://localhost:8000/look/getuser/${userId}`, { credentials: 'include' });
+    const loggedInUserData = await loggedInUser.json();
+
+    const userToAction = await fetch(`http://localhost:8000/look/getuser/${userToActionId}`, { credentials: 'include' });
+    const userToActionData = await userToAction.json();
+
+    if (
+      loggedInUserData.usersLiked.includes(userToActionId) &&
+      userToActionData.usersLiked.includes(userId)
+    ) {
+      const data = {
+        chatName: `NewChat: ${userName} and ${userToActionName}`,
+      };
+      try {
+        const response = await fetch('http://localhost:8000/chat/create', {
+            credentials: 'include',
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+          });
+          if(!response.ok)
+          {
+              throw new Error('Network response was not ok');
+          }
+          response.text().then(async responseT => {
+            const chatId = JSON.parse(responseT);
+            console.log(chatId);
+            const user1Data = {
+                chatId: chatId,
+                userId: userId,
+            };
+            console.log(user1Data);
+            try {
+              const response = await fetch('http://localhost:8000/chat/join', {
+                  credentials: 'include',
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(user1Data)
+                });
+                if(!response.ok)
+                {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            
+            const user2Data = {
+              chatId: chatId,
+              userId: userToActionId,
+            };
+            try {
+              const response = await fetch('http://localhost:8000/chat/join', {
+                  credentials: 'include',
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(user2Data)
+                });
+                if(!response.ok)
+                {
+                    throw new Error('Network response was not ok');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+
+          }).catch(error => {
+            console.error('Error:', error);
+          });
+      } catch (error) {
+          console.error('Error:', error);
+      }
+
+      alert('Matched!'); 
+    }
   };
+
+
 
   return (
     <div>
