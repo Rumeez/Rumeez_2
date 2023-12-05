@@ -18,6 +18,7 @@ const Home: React.FunctionComponent = (): JSX.Element => {
       });
 
       if (!response.ok) {
+
         throw new Error('Network response was not ok');
       }
 
@@ -38,16 +39,33 @@ const Home: React.FunctionComponent = (): JSX.Element => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
+
+        
         const userScores = await response.json();
         setData(userScores);
+      
+        const list = Object.keys(userScores || {});
+      if (list.length === 0) {
+        alert('Liked or Skipped all users');
+        return;
+      }
+
 
         const userIds = Object.keys(userScores || {});
         const userId = userIds[currentUserIndex];
+        console.log(userId);
+        if(userId === undefined)
+        {
+          alert('No More Users');
+          return;
+        }
         const userResponse = await fetch(`http://localhost:8000/look/getuser/${userId}`, { credentials: 'include' });
 
         if (!userResponse.ok) {
           throw new Error(`HTTP error! Status: ${userResponse.status}`);
         }
+        
 
         const userData = await userResponse.json();
         setCurrentUserData(userData);
@@ -69,8 +87,14 @@ const Home: React.FunctionComponent = (): JSX.Element => {
     if (loading) return;
     setLoading(true);
 
+    
+
     try {
       const userIds = Object.keys(data || {});
+      if (userIds.length === 0) {
+        alert('No More Users');
+        return;
+      }
       const userId = context.user.userId;
       const userToActionId = userIds[currentUserIndex];
       const actionUrl = `http://localhost:8000/look/${actionType}/${userId}/${userToActionId}`;
